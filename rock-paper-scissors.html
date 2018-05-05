@@ -1,0 +1,316 @@
+
+
+<!--Rock Paper Scissors, with musical outcomes, basic tutorial.-->
+
+<!--Written by Bo Keeney for the London Interactive Music Meetup, 2016.-->
+
+
+
+
+<!--this is a comment in HTML. Comments are ignored in the code - the computer basically overlooks them, when they're written between these symbols.-->
+
+<!--the text below is the HTML part.-->
+
+<!--first, we'll set up the page, putting a few breaks before the buttons, to move them down the page a little.-->
+
+
+
+
+
+<body>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+
+
+<!--Now, we'll set up the buttons, below.-->
+
+
+
+
+<div align="center">
+
+<button style="width:120px;height:60px;" onclick="myFunction1()">Rock</button>
+
+<button style="width:120px;height:60px;" onclick="myFunction2()">Paper</button>
+
+<button style="width:120px;height:60px;" onclick="myFunction3()">Scissors</button>
+
+</div>
+
+
+</body>
+
+
+
+
+
+<!--And now, we'll set up the HTML script so it recognises the audio files we have in our folder.-->
+
+
+
+
+
+<audio id = "loseAudio" preload = "auto"> 
+  <source src="loseAudio.wav">
+</audio>
+
+<audio id = "winAudio" preload = "auto"> 
+  <source src="winAudio.wav">
+</audio>
+
+<audio id = "drawAudio" preload = "auto"> 
+  <source src="drawAudio.wav">
+</audio>
+
+
+
+
+
+
+<!--Now, we'll write <script>, which means we're going to start writing in Javascript. Javascript needs to be inside of an HTML file to run.-->
+
+
+
+
+<script>
+
+
+
+
+
+/*Now that we're in Javascript, this is what a comment looks like.*/
+
+/*And first, we're going to set up two 'Variables'. These are essentially 'containers' for numbers, or text ('strings'), or other types of data.*/ 
+
+/*The two variables we'll set up are called 'userChoice' and 'computerChoice'. These are the containers where we'll send the user's choice, and the computer's choice.*/
+
+
+
+
+var userChoice;
+
+var computerChoice;
+
+
+
+
+
+
+/*Now, we'll set up a function. Functions take in data, and put out something new. What they put out depends on the instructions inside the function.*/ 
+
+/*This function makes a computer choice - it's called 'makeComputerChoice'.*/ 
+
+/*What's happening is that the function generates a random number between 0 and 1. If it's between 0 and .34, it'll make a computer choice of 'rock', and send it to our variable above, 'computerChoice'.*/ 
+
+/*If it's between .34 and .67, it'll choose 'paper'. If it's above .67, it'll choose 'scissors'.*/
+
+
+
+
+
+
+
+var makeComputerChoice = function()
+{
+	computerChoice = Math.random();
+
+	if (computerChoice < 0.34) 
+	{
+		computerChoice = "rock";
+	} 
+
+	else if(computerChoice <= 0.67) 
+	{
+		computerChoice = "paper";
+	} 
+
+	else 
+	{
+		computerChoice = "scissors";
+	} 
+};
+
+
+
+
+
+
+/*Now that we've got the computer making a choice, we need to set up the game itself. We need to define what the outcome should be, whatever the user's and computer's choices are.*/ 
+
+/*We'll set it up very simply. It'll follow a rock-paper-scissors structure. If the computer wins, the browser will play the 'loseAudio'. If the human wins, it'll play the 'winAudio'. If it's a draw, it'll play the 'drawAudio'.*/ 
+
+/*This 'game' is another function. We'll call the function 'compare', and write all of our code inside it.*/ 
+
+
+
+
+
+
+var compare = function(choice1 , choice2)
+{
+
+confirm("Computer: " + computerChoice);
+
+    if(choice1 === choice2)
+    {
+        confirm("The result is a tie!");
+		drawAudio.play(); 
+    }
+    else if(choice1 === "rock")
+    {
+        if(choice2 === "scissors")
+        {
+            confirm("human wins");
+		winAudio.play(); 
+        }
+        else
+        {
+            confirm("computer wins");
+		loseAudio.play(); 
+        }
+    }
+    else if(choice1 === "paper")
+    {
+        if(choice2 === "rock")
+        {
+            confirm("human wins");
+		winAudio.play(); 
+        }
+        else
+        {
+            confirm("computer wins");
+		loseAudio.play();
+        }
+    }
+    else if(choice1 === "scissors")
+    {
+        if(choice2 === "paper")
+        {
+            confirm("human wins");
+		winAudio.play(); 
+        }
+        else
+        {
+            confirm("computer wins");
+		loseAudio.play();
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+/*Here, we're going to set up functions in javaScript that receive a signal from the buttons on the page.*/ 
+
+/*Whenever a button is pressed, it 'actions' one of these functions.*/ 
+
+/*We'll set up the buttons so that whenever any button is pressed, it: 
+
+-stops all of the audio, 
+-sets all of the audio back to 0, 
+-changes 'userChoice' to the word on the button (rock, paper, scissors)
+-asks the computer to make a choice.*/
+
+/*The buttons at the top of this text (the ones we set up in HTML) already point to functions that have these names. So now we just need to create the functions themselves, and put instructions inside them.*/ 
+
+
+
+
+
+
+var myFunction1 = function()
+{	
+	winAudio.pause(); 
+	winAudio.currentTime = 0; 
+	loseAudio.pause();
+	loseAudio.currentTime = 0; 
+	drawAudio.pause();
+	drawAudio.currentTime = 0; 
+
+	userChoice = "rock";
+	makeComputerChoice();
+	compare(userChoice , computerChoice);
+};
+
+var myFunction2 = function()
+{
+	winAudio.pause(); 
+	winAudio.currentTime = 0; 
+	loseAudio.pause();
+	loseAudio.currentTime = 0; 
+	drawAudio.pause();
+	drawAudio.currentTime = 0; 
+
+	userChoice = "paper";
+	makeComputerChoice();
+	compare(userChoice , computerChoice);
+};
+
+var myFunction3 = function()
+{
+	winAudio.pause(); 
+	winAudio.currentTime = 0; 
+	loseAudio.pause();
+	loseAudio.currentTime = 0; 
+	drawAudio.pause();
+	drawAudio.currentTime = 0; 
+
+	userChoice = "scissors";
+	makeComputerChoice();
+	compare(userChoice , computerChoice);
+};
+
+
+
+
+
+
+
+
+/*We let the computer know that this is the end of our javaScript section, by placing the tag below.*/ 
+
+
+
+
+</script>
+
+
+
+
+
+<!--To finish the whole thing off, you'll need to: 
+
+-copy this text file into a new folder
+
+-place .wav files into that folder, with the names 'winAudio.wav','loseAudio.wav',and 'drawAudio.wav'
+
+-change the extension on the copied text file to '.html'
+
+And you're done! Just click on the new .html file you've created, and it should launch the program in your browser.-->
+
+
